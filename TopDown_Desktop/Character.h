@@ -4,11 +4,12 @@ class Character
 {
 // puiblic variables
 public:
-    Character();
+    Character(int winWidth, int winHeight);
     Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
-    void setScreenPos(int winWidth, int winHeight);
+    //void setScreenPos(int winWidth, int winHeight); // replaced 
     void tick(float dT);
     void undoMovement();
+    Rectangle getCollisionRec();
     //
 
 // private variables
@@ -31,6 +32,8 @@ private:
     float speed{4.f};
     float width{};
     float height{};
+
+    float scale{4.0f}; // scale up texture
 
     //
 };

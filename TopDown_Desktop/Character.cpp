@@ -1,20 +1,26 @@
 #include "Character.h"
 #include "raymath.h"
 
-
-Character::Character()
+Character::Character(int winWidth, int winHeight)
 {
     width = texture.width / maxFrames;
     height = texture.height;
+
+    // center of the screen
+    screenPos = {
+        // better casting function -> does type checking
+        static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width),
+        static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)};
 }
 
 // fully qualifying the function to the class Character
-void Character::setScreenPos(int winWidth, int winHeight)
+/*void Character::setScreenPos(int winWidth, int winHeight)
 {
     screenPos = {
         (float)winWidth / 2.0f - 4.0f * (0.5f * width),
         (float)winHeight / 2.0f - 4.0f * (0.5f * height)};
 }
+*/
 
 void Character::tick(float dT)
 {
@@ -59,11 +65,21 @@ void Character::tick(float dT)
     // draw the character
     // if facing left, flip the rectangle
     Rectangle source{frame * width, 0.f, rightLeft * width, height};
-    Rectangle dest{screenPos.x, screenPos.y, 4.f * width, 4.f * height};
+    Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
 }
 
 void Character::undoMovement()
 {
     worldPos = worldPosLastFrame;
+}
+
+Rectangle Character::getCollisionRec()
+{
+    return Rectangle{
+        screenPos.x,
+        screenPos.y,
+        width * scale,
+        height * scale
+    };
 }
