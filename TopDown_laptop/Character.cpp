@@ -69,6 +69,7 @@ void Character::tick(float dT)
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
 }
 
+/*
 void Character::undoMovement()
 {
     worldPos = worldPosLastFrame;
@@ -83,3 +84,4 @@ Rectangle Character::getCollisionRec()
         height * scale
     };
 }
+*/
