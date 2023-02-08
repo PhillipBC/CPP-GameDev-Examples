@@ -1,19 +1,23 @@
 #include "raylib.h"
+#include "BaseCharacter.h"
 
-class Character
+// inherits publicly from BaseCharacter
+class Character : public BaseCharacter
 {
 // puiblic variables
 public:
+    // everything is inherited from BaseCharacter now
     Character(int winWidth, int winHeight);
-    Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
+    //Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
     //void setScreenPos(int winWidth, int winHeight); // replaced 
     void tick(float dT);
-    void undoMovement();
-    Rectangle getCollisionRec();
+    //void undoMovement();
+    //Rectangle getCollisionRec();
     //
 
 // private variables
 private:
+    /*
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}; // default texture used
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};    // idle texture
     Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};      // running texture
@@ -34,6 +38,6 @@ private:
     float height{};
 
     float scale{4.0f}; // scale up texture
-
+    */
     //
 };

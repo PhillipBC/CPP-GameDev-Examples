@@ -12,7 +12,6 @@ public:
     Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
     void undoMovement();
     Rectangle getCollisionRec();
-    virtual void tick(float dT);
     //
 //protected stuff
 protected:

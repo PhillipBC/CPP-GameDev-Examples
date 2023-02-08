@@ -1,3 +1,7 @@
+// checking to see if already imported
+#ifndef CHARACTER_H // if not defined
+#define CHARACTER_H // define it
+
 #include "raylib.h"
 #include "BaseCharacter.h"
 
@@ -10,7 +14,8 @@ public:
     Character(int winWidth, int winHeight);
     //Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
     //void setScreenPos(int winWidth, int winHeight); // replaced 
-    void tick(float dT);
+    virtual void tick(float dT) override; // override of parent version
+    //void tick(float dT);
     //void undoMovement();
     //Rectangle getCollisionRec();
     //
@@ -41,3 +46,5 @@ private:
     */
     //
 };
+
+#endif // end if

@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "BaseCharacter.h"
-#include "Character.h"
 
 class Enemy : public BaseCharacter
 {
@@ -8,15 +7,13 @@ class Enemy : public BaseCharacter
 public:
     Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture);
     //Vector2 getWorldPos() {return worldPos;}
-    virtual void tick(float dT) override;
+    void tick(float dT);
     //void undoMovement();
     //Rectangle getCollisionRec();
-    void setTarget(Character* character){ target = character; };
     //
 
 // private variables
 private:
-    Character* target;
     /*
         Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}; // default texture used
         Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};    // idle texture
