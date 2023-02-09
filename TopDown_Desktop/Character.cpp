@@ -25,7 +25,9 @@ Character::Character(int winWidth, int winHeight)
 void Character::tick(float dT)
 {
     // store position before movement
-    worldPosLastFrame = worldPos;
+    //worldPosLastFrame = worldPos;
+
+    BaseCharacter::tick(dT);
     // direction vector
     Vector2 direction{}; // init as 0 in all directions
 
@@ -53,7 +55,7 @@ void Character::tick(float dT)
         // not moving
         texture = idle;
     }
-
+    /*
     // update animation frame
     runningTime += dT;
     if (runningTime >= updateTime)
@@ -67,6 +69,7 @@ void Character::tick(float dT)
     Rectangle source{frame * width, 0.f, rightLeft * width, height};
     Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
+    */
 }
 
 /*

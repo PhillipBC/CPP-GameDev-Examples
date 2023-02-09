@@ -14,7 +14,11 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
 }
 
 void Enemy::tick(float dT)
-{
+{   
+    // -> lets you call functions of the object whos pointer we are using
+    screenPos = Vector2Subtract(worldPos, target->getWorldPos());
+    BaseCharacter::tick(dT);
+    /*
     // store position before movement
     worldPosLastFrame = worldPos;
 
@@ -31,6 +35,7 @@ void Enemy::tick(float dT)
     Rectangle source{frame * width, 0.f, rightLeft * width, height};
     Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
+    */
 }
 /*
     void Enemy::undoMovement()

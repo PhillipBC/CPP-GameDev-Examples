@@ -12,6 +12,7 @@ public:
     //void undoMovement();
     //Rectangle getCollisionRec();
     void setTarget(Character* character){ target = character; };
+    virtual Vector2 getScreenPos() override;
     //
 
 // private variables

@@ -15,6 +15,7 @@ public:
     //Vector2 getWorldPos() { return worldPos; } // no semicolon needed for function
     //void setScreenPos(int winWidth, int winHeight); // replaced 
     virtual void tick(float dT) override; // override of parent version
+    virtual Vector2 getScreenPos() override;
     //void tick(float dT);
     //void undoMovement();
     //Rectangle getCollisionRec();
@@ -22,6 +23,11 @@ public:
 
 // private variables
 private:
+    int windowWidth{};
+    int windowHeight{};
+
+    Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
+    Rectangle weaponCollisionRec{};
     /*
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}; // default texture used
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};    // idle texture

@@ -11,13 +11,29 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
     
     width = texture.width / maxFrames;
     height = texture.height;
+
+    speed = 3.5f;
 }
 
 void Enemy::tick(float dT)
-{   
+{
+    // Set velocity as Targert vector to the character
+    velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
+    /*
+        // Get toTargert vector
+        Vector2 toTarget = Vector2Subtract(target->getScreenPos(), screenPos);
+        // Normalize the vector
+        toTarget = Vector2Normalize(toTarget);
+        // Multiply the vector by the enemies speed
+        toTarget = Vector2Scale(toTarget, speed);
+        // then move the enemy (set worldPos)
+        worldPos = Vector2Add(worldPos, toTarget);
+    */
     // -> lets you call functions of the object whos pointer we are using
-    screenPos = Vector2Subtract(worldPos, target->getWorldPos());
-    BaseCharacter::tick(dT);
+    //screenPos = Vector2Subtract(worldPos, target->getWorldPos());
+
+    // render character
+    //BaseCharacter::tick(dT);
     /*
     // store position before movement
     worldPosLastFrame = worldPos;
@@ -36,20 +52,27 @@ void Enemy::tick(float dT)
     Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
     */
-}
-/*
-    void Enemy::undoMovement()
-    {
-        worldPos = worldPosLastFrame;
-    }
 
-    Rectangle Enemy::getCollisionRec()
-    {
-        return Rectangle{
-            screenPos.x,
-            screenPos.y,
-            width * scale,
-            height * scale
-        };
-    }
-*/
+}
+
+Vector2 Enemy::getScreenPos()
+{
+    return Vector2Subtract(worldPos, target->getWorldPos());
+}
+
+    /*
+        void Enemy::undoMovement()
+        {
+            worldPos = worldPosLastFrame;
+        }
+
+        Rectangle Enemy::getCollisionRec()
+        {
+            return Rectangle{
+                screenPos.x,
+                screenPos.y,
+                width * scale,
+                height * scale
+            };
+        }
+    */
