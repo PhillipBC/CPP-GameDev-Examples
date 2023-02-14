@@ -16,6 +16,10 @@ public:
     //void setScreenPos(int winWidth, int winHeight); // replaced 
     virtual void tick(float dT) override; // override of parent version
     virtual Vector2 getScreenPos() override;
+    Rectangle getWeaponCollisionRec() { return weaponCollisionRec;}
+    // const function
+    float getHealth() const {return health;}
+    void takeDamage(float damage);
     //void tick(float dT);
     //void undoMovement();
     //Rectangle getCollisionRec();
@@ -28,6 +32,7 @@ private:
 
     Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
     Rectangle weaponCollisionRec{};
+    float health{100.f};
     /*
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}; // default texture used
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};    // idle texture

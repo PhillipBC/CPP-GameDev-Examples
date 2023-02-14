@@ -18,6 +18,9 @@ public:
 // private variables
 private:
     Character* target;
+    float damagePerSec{10.f};
+    // radius of collision
+    float radius{25.f};
     /*
         Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")}; // default texture used
         Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};    // idle texture

@@ -12,11 +12,12 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
     width = texture.width / maxFrames;
     height = texture.height;
 
-    speed = 3.5f;
+    speed = 2.5f;
 }
 
 void Enemy::tick(float dT)
 {
+    if (!getAlive()) return;
     // Set velocity as Targert vector to the character
     velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
     /*
@@ -32,8 +33,10 @@ void Enemy::tick(float dT)
     // -> lets you call functions of the object whos pointer we are using
     //screenPos = Vector2Subtract(worldPos, target->getWorldPos());
 
+    // check if character is within radius
+    if (Vector2Length(velocity) < radius) velocity = {};
     // render character
-    //BaseCharacter::tick(dT);
+    BaseCharacter::tick(dT);
     /*
     // store position before movement
     worldPosLastFrame = worldPos;
@@ -52,7 +55,14 @@ void Enemy::tick(float dT)
     Rectangle dest{screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(texture, source, dest, Vector2{}, 0.f, WHITE);
     */
-
+   // if enemy overlaps with target (character) collision rec
+   if(CheckCollisionRecs(target->getCollisionRec(),getCollisionRec()))
+   {
+        // remember, target is a pointer, so '->' lets us use the functions
+        // of the object it points to
+        target->takeDamage(damagePerSec * dT);
+   }
+   
 }
 
 Vector2 Enemy::getScreenPos()
@@ -60,19 +70,19 @@ Vector2 Enemy::getScreenPos()
     return Vector2Subtract(worldPos, target->getWorldPos());
 }
 
-    /*
-        void Enemy::undoMovement()
-        {
-            worldPos = worldPosLastFrame;
-        }
+/*
+    void Enemy::undoMovement()
+    {
+        worldPos = worldPosLastFrame;
+    }
 
-        Rectangle Enemy::getCollisionRec()
-        {
-            return Rectangle{
-                screenPos.x,
-                screenPos.y,
-                width * scale,
-                height * scale
-            };
-        }
-    */
+    Rectangle Enemy::getCollisionRec()
+    {
+        return Rectangle{
+            screenPos.x,
+            screenPos.y,
+            width * scale,
+            height * scale
+        };
+    }
+*/

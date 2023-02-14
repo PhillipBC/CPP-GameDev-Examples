@@ -34,9 +34,9 @@ Vector2 Character::getScreenPos()
 
 void Character::tick(float dT)
 {
+    if (!getAlive()) return; // if dead, don't do all of tick
     // store position before movement
     //worldPosLastFrame = worldPos;
-
     if (IsKeyDown(KEY_A))
         velocity.x -= 1.0; // left
     if (IsKeyDown(KEY_D))
@@ -99,7 +99,10 @@ void Character::tick(float dT)
             weapon.width * scale,
             weapon.height * scale
         };
-        rotation = 35.f;
+        // simple if -> ternary operator
+        // if facing right -> swing sword
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f;
+        //rotation = 35.f;
     }
     else
     {
@@ -111,7 +114,8 @@ void Character::tick(float dT)
             weapon.width * scale,
             weapon.height * scale
         };
-        rotation = -35.f;
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.f : 0.f;
+        //rotation = -35.f;
     }
     
     // draw the sword
@@ -120,13 +124,24 @@ void Character::tick(float dT)
     
     DrawTexturePro(weapon, source, dest, origin, rotation, WHITE);
 
-    DrawRectangleLines(
+    /*DrawRectangleLines(
         weaponCollisionRec.x,
         weaponCollisionRec.y,
         weaponCollisionRec.width,
         weaponCollisionRec.height,
         RED
-    );
+    );*/
+}
+
+void Character::takeDamage(float damage)
+{
+    // decrease health by damage
+    health -= damage;
+    if (health <= 0.f)
+    {
+        // if health drops below zero, kill character
+        setAlive(false);
+    }
 }
 
 /*

@@ -16,6 +16,8 @@ public:
     // pure virtual function - function is only defined by children of parent class
     virtual Vector2 getScreenPos() = 0; 
     // this makes BaseCharacter an abstract class -> cant make an instance of this, only its children
+    bool getAlive(){return alive;}
+    void setAlive(bool isAlive){alive = isAlive;}
     //
 //protected stuff
 protected:
@@ -44,7 +46,7 @@ protected:
 
     // private variables
 private:
-    
+    bool alive{true}; // boolean to determine if a character is alive
     //
 };
 

@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
+#include <string>
 
 int main()
 {
@@ -49,12 +50,28 @@ int main()
     };
 
     // create an enemy
-    Enemy goblin{Vector2{},
+    Enemy goblin{Vector2{800.f, 300.f},
         LoadTexture("characters/goblin_idle_spritesheet.png"), 
         LoadTexture("characters/goblin_run_spritesheet.png")
     };
-    goblin.setTarget(&knight);
+    //goblin.setTarget(&knight); // done below
 
+    // create another enemy
+    Enemy slime{Vector2{500.f, 700.f},
+        LoadTexture("characters/slime_idle_spritesheet.png"),
+        LoadTexture("characters/slime_run_spritesheet.png")
+    };
+    // array of enemy pointers
+    Enemy* enemies[]{
+        &goblin,
+        &slime
+    };
+
+    for (auto enemy : enemies)
+    {
+        enemy->setTarget(&knight);
+    }
+    
     //
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -77,6 +94,20 @@ int main()
         {
             prop.Render(knight.getWorldPos());
         }
+        // if character is dead
+        if (!knight.getAlive())
+        {
+            DrawText("GAME OVER!", 55.f, 45.f, 40, RED);
+            EndDrawing();
+            continue; // ignores the rest of loop iteration
+        }
+        else // character is alive
+        {
+            std::string knightsHealth = "Health: ";
+            knightsHealth.append(std::to_string(knight.getHealth()), 0, 5); // keep characters 0 to 5
+            DrawText(knightsHealth.c_str(), 55.f, 45.f, 40, RED);
+        }
+        
         // check map bounds
         knight.tick(dT);
         if (knight.getWorldPos().x < 0.f ||
@@ -95,7 +126,11 @@ int main()
             }
         }
         
-        goblin.tick(dT);
+        //goblin.tick(dT);
+        for (auto enemy : enemies)
+        {
+            enemy->tick(dT);
+        }
 
         /*
             // direction vector
@@ -150,6 +185,21 @@ int main()
             Rectangle dest{knightPos.x, knightPos.y, 4.f * (float)knight.width/6.f, 4.f * (float)knight.height};
             DrawTexturePro(knight, source, dest, origin, 0.f, WHITE);
         */
+
+       // if the sword is swung by pressing the mouse button
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            // goblin.setAlive(false);
+            for (auto enemy : enemies)
+            {
+                //if the weapon collision box collides with the goblin collision rec
+                if(CheckCollisionRecs(enemy->getCollisionRec(),knight.getWeaponCollisionRec()))
+                {
+                    // kill the goblin
+                    enemy->setAlive(false);
+                }
+            }
+        }
 
         EndDrawing();
     }
